@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      php: 8.2
+      nodejs: 18
+    commands:
+      - echo Installing dependencies...
+      - composer install --no-dev --optimize-autoloader
+      - npm install
+
+  build:
+    commands:
+      - echo Building assets...
+      - npm run build
+      - php artisan config:cache
+      - php artisan route:cache
+      - php artisan view:cache
+
+artifacts:
+  files:
+    - '**/*'
